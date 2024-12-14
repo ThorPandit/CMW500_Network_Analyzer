@@ -4,42 +4,36 @@ Comprehensive Network Analysis for IoT Modules using CMW500.
 **Overview**
 This project provides a tool to automate and simplify the verification of smart meter modules and other IoT devices using the Rohde & Schwarz CMW500 Communication Tester. 
 It focuses on critical network parameters such as:
-RSRP (Reference Signal Received Power)
-RSRQ (Reference Signal Received Quality)
-Throughput Measurements (DL/UL)
-Custom Signal Strength and Performance Metrics
-The application is designed to enhance testing efficiency and accuracy while minimizing manual intervention.\
+1. RSRP (Reference Signal Received Power)
+2. RSRQ (Reference Signal Received Quality)
+3. Throughput Measurements (DL/UL)
+4. Custom Signal Strength and Performance Metrics
+5. The application is designed to enhance testing efficiency and accuracy while minimizing manual intervention.\
 
 **Features**
-RSRP and RSRQ Measurements
-Automates the process of measuring signal strength and quality.
-Throughput Testing
-Validates module performance by assessing upload and download speeds.
-Configurable Test Parameters
-Supports flexible configuration for frequencies, power levels, bandwidth, and more.
-Real-Time Monitoring
-Displays live results for instant verification.
-Report Generation
-Automatically creates reports with graphs and key metrics in CSV and image formats.
-User-Friendly Interface
-Simplified UI for seamless operation.
+1. RSRP and RSRQ Measurements
+2. Automates the process of measuring signal strength and quality.
+3. Throughput Testing
+4. Validates module performance by assessing upload and download speeds.
+5. Configurable Test Parameters
+6. Supports flexible configuration for frequencies, power levels, bandwidth, and more.
+7. Real-Time Monitoring
+8. Displays live results for instant verification.
+9. Report Generation
+10. Automatically creates reports with graphs and key metrics in CSV and image formats.
+11. User-Friendly Interface
+12. Simplified UI for seamless operation.
 
 **Getting Started
 Prerequisites**
-Rohde & Schwarz CMW500 Communication Tester.
-Installed Python environment (>=3.8).
-Dependencies listed in requirements.txt.
-View results in real-time and export them as reports.
+1. Rohde & Schwarz CMW500 Communication Tester.
+2. Installed Python environment (>=3.8).
+3. Dependencies listed in requirements.txt.
+4. View results in real-time and export them as reports.
 
 **Folder Structure**
-CMW500_Module_Performance_Tester/
-├── CableLoss_Multifrequency_Graphgeneration.py  # Measurement script
-├── Config.json                                  # Default configuration file
-├── LICENSE                                      # Open-source license
-├── README.md                                    # Project documentation
-├── requirements.txt                             # Dependencies
-├── UI_Code.py                                   # User interface script
-├── Reports/                                     # Auto-generated reports (CSV, images)
+![image](https://github.com/user-attachments/assets/360be353-0706-4901-b936-72b07e0e2bbb)
+
 
 **Usage**
 Connect CMW500 to Netwoirk as this will enable this testing anywhere in the network range. 
