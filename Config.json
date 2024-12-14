@@ -1,0 +1,7 @@
+{
+    "device_address": "TCPIP::192.10.11.82::INSTR",
+    "band": "OB5",
+    "power_level": "-80",
+    "measurement_interval": "I640",
+    "gap_period": "G040"
+}
