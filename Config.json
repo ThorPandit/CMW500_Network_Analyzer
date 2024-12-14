@@ -1,5 +1,5 @@
 {
-    "device_address": "TCPIP::192.10.11.82::INSTR",
+    "device_address": "192.10.11.82",
     "band": "OB5",
     "power_level": "-80",
     "measurement_interval": "I640",
@@ -7,4 +7,3 @@
     "max_retries": 5,
     "timeout": 30000
 }
-
