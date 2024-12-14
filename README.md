@@ -8,7 +8,7 @@ RSRP (Reference Signal Received Power)
 RSRQ (Reference Signal Received Quality)
 Throughput Measurements (DL/UL)
 Custom Signal Strength and Performance Metrics
-The application is designed to enhance testing efficiency and accuracy while minimizing manual intervention.
+The application is designed to enhance testing efficiency and accuracy while minimizing manual intervention.\
 
 **Features**
 RSRP and RSRQ Measurements
