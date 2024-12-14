@@ -23,7 +23,8 @@ def load_config():
         exit(1)
 
 config = load_config()
-
+timeout=config["timeout"]
+max_retries=config["max_retries"]
 rm = pyvisa.ResourceManager()
 cmw = rm.open_resource(config["device_address"])
 print(cmw.query("*IDN?"))
@@ -31,7 +32,7 @@ cmw.write("*RST;*OPC;*CLS")
 logging.info("Logging L.15: RST, OPC and CLS fired")
 print("Identity:", cmw.query("*IDN?"))  # Verify device is responsive
 print("Errors:", cmw.query("SYST:ERR?"))  # Ensure no errors occurred
-cmw.timeout = 30000  # Increase timeout to 30 seconds
+cmw.timeout = timeout  # Increase timeout to 30 seconds
 
 # RF Signal Generator
 cmw.write("SOURce:LTE:SIGN:CELL:STATe ON;*OPC")
@@ -41,17 +42,17 @@ try:
         print("DL LTE channel enabled, STATUS:", cmw.query("SOURce:LTE:SIGN:CELL:STATe:ALL?"))
         cmw.write(f"CONFigure:LTE:SIGN:PCC:BAND {config['band']}")  # Band configured dynamically
         logging.info(f"Logging L.27: {config['band']} Configured")
-        cmw.timeout = 30000
+        cmw.timeout = timeout
 
         cmw.write(f"CONFigure:LTE:SIGN:DL:PCC:RSEPre:LEVel {config['power_level']}")  # Set RS EPRE
         logging.info(f"Logging L.33: Power Level Set to {config['power_level']} dBm")
         cmw.write("SOURce:LTE:SIGN1:CELL:STATe ON")
-        cmw.timeout = 50000
+        cmw.timeout = timeout
 
         # Query IPv4 and IPv6 address
 
         # Query RSRP and RSRQ with Retry Mechanism
-        max_retries = 5
+
         retry_delay = 2  # seconds
         for attempt in range(max_retries):
             UE_IPV4 = cmw.query('SENSe:LTE:SIGN:UESinfo:UEADdress:IPV4?')
@@ -71,26 +72,26 @@ try:
         UE_IMEI = cmw.query('SENSe:LTE:SIGN1:UESinfo:IMEI?')
         UE_IMSI = cmw.query('SENSe:LTE:SIGN1:UESinfo:IMSI?')
         print(f"NIC of IMEI: {UE_IMEI} & SIM of IMSI: {UE_IMSI}")
-        cmw.timeout = 1000
+        cmw.timeout = timeout
 
         # UE Report enable settings 1.Reporting Interval
         cmw.write("CONFigure:LTE:SIGN1:UEReport:RINTerval I640")  # Example: 640 ms
         print("RINTerval Errors:", cmw.query("SYST:ERR?"))  # Ensure no errors occurred
-        cmw.timeout = 1000  # Increase timeout to 1 seconds
+        cmw.timeout = timeout  # Increase timeout to 1 seconds
 
         # Measurement Gap Enable (Optional)
         cmw.write("CONFigure:LTE:SIGN1:UEReport:MGENable ON")
         print("MGENable Errors:", cmw.query("SYST:ERR?"))  # Ensure no errors occurred
-        cmw.timeout = 1000  # Increase timeout to 1 seconds
+        cmw.timeout = timeout  # Increase timeout to 1 seconds
 
         # Measurement Gap Period (Optional)
         cmw.write("CONFigure:LTE:SIGN1:UEReport:MGPeriod G040")
         print("MGPeriod Errors:", cmw.query("SYST:ERR?"))  # Ensure no errors occurred
-        cmw.timeout = 1000  # Increase timeout to 1 seconds
+        cmw.timeout = timeout  # Increase timeout to 1 seconds
 
         cmw.write('CONFigure:LTE:SIGN1:UEReport:ENABle ON')
         print("UEReport Enable Errors:", cmw.query("SYST:ERR?"))  # Ensure no errors occurred
-        cmw.timeout = 10000  # Increase timeout to 10 seconds
+        cmw.timeout = timeout  # Increase timeout to 10 seconds
 
         # Query RSRP and RSRQ with Retry Mechanism
         max_retries = 5
@@ -138,3 +139,13 @@ except pyvisa.errors.VisaIOError as e:
 finally:
     # Close the connection
     cmw.close()
+
+results = {
+    "RSRP": RSRP_RCOM1,
+    "RSRQ": RSRQ_RCOM1,
+    #"SINR": SINR,
+    #"CQI": CQI,
+    "DL_Throughput": f"{float(full_DL_throughput) * 1e-3:.2f}",
+    "UL_Throughput": f"{float(full_UL_throughput) * 1e-3:.2f}"
+}
+print("Measurement Results:", json.dumps(results, indent=4))

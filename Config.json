@@ -3,5 +3,8 @@
     "band": "OB5",
     "power_level": "-80",
     "measurement_interval": "I640",
-    "gap_period": "G040"
+    "gap_period": "G040",
+    "max_retries": 5,
+    "timeout": 30000
 }
+
